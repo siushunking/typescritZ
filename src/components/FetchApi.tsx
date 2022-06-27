@@ -11,7 +11,7 @@ interface Todo {
     userNumber: number;
 }
 
-const url = 'https://jsonplaceholder.typicode.com/todos'
+const url = 'https://jsonplaceholder.typicode.com/todos/1'
 
 
 interface TodoJson {
