@@ -12,8 +12,7 @@ interface Todo {
 }
 
 const url = 'https://jsonplaceholder.typicode.com/todos'
-// all data & somedata
-// datasource
+
 
 interface TodoJson {
   id: number;
