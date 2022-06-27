@@ -2,51 +2,21 @@ import React,{useEffect, useState} from 'react';
 import 'antd/dist/antd.css';
 import { Divider, List, Avatar } from 'antd';
 import axios from 'axios'
-
-interface Todo {
-    id: number;
-    userId: number;
-    title: string;
-    completed: boolean;
-    userNumber: number;
-}
-
-const url = 'https://jsonplaceholder.typicode.com/todos/1'
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchTodoList } from '../asyncAction';
+import { Todo } from '../todoSlice';
+import { RootState } from '../store';
 
 
-interface TodoJson {
-  id: number;
-  userId: number;
-  title: string;
-  completed: boolean;
-}
 
-const getTodoFromJson = (json: TodoJson): Todo => ({
-  id: json.id || 0,
-  userId: json.userId || 0,
-  title: json.title || "",
-  completed: json.completed || false,
-  userNumber: json.id + json.userId
-})
 
 const FetchApi = () => {
-    const [todoList, setTodoList] = useState<Todo[]>([]);
-
+    // const [todoList, setTodoList] = useState<Todo[]>([]);
+    const todoList = useSelector((state: RootState) => state.todoList.todos)
+    const dispatch = useDispatch()
     useEffect(() => {
-        // 使用瀏覽器 API 更新文件標題
-        const fetchApiData = async () => {
-            try {
-              const response = await axios.get(url)
-              const todoListJson: TodoJson[] = response.data
-              const todos = todoListJson.map((json) => (getTodoFromJson(json)))
-              setTodoList(todos)
-
-            } catch (error) {
-                console.log(error);
-            }
-          };
-          fetchApiData();
-      },[]);
+      dispatch(fetchTodoList())
+    },[]);
 
     const renderFunction = (todo: Todo) => {
       return (
